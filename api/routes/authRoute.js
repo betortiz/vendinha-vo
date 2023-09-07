@@ -1,5 +1,6 @@
 import express from 'express';
-import { loginController, registerController } from '../controllers/authController.js';
+import { requireSignIn } from '../middlewares/authMiddleware.js';
+import { loginController, registerController, testControler } from '../controllers/authController.js';
 
 // Route object
 const router = express.Router();
@@ -10,6 +11,9 @@ router.post('/register', registerController);
 
 // Login do usuário || POST
 router.post('/login', loginController);
+
+// Teste de rota protegida || GET
+router.get('/test', requireSignIn, testControler);
 
 // Exporta o objeto router
 export default router;

@@ -107,3 +107,8 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+// Teste de rota protegida
+export const testControler = async (req, res) => {
+  res.send({ message: 'Rota protegida' });
+};
