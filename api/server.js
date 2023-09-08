@@ -31,5 +31,7 @@ const port = process.env.PORT || 5000;
 
 // Inicializa o servidor na porta especificada
 app.listen(port, () => {
-  console.log(`Server running on ${process.env.DEV_MODE} mode port ${port}`.bgCyan.white);
+  console.log(
+    `Server running on ${process.env.DEV_MODE} mode port ${port}`.bgCyan.white
+  );
 });

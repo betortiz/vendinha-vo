@@ -1,0 +1,17 @@
+.form-stl{
+    width: 100%;
+    max-width: 330px;
+    padding: 5px;
+    margin: auto;
+    min-height: 1px;
+    text-transform: uppercase;
+}
+
+.topo {
+  background-color: #e6b472;
+  margin-top: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 1px black !important;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.6);
+}
