@@ -6,17 +6,22 @@ const Menu = () => {
     <>
       <div className='text-center'>
         <h4>Painel de controle</h4>
-        <ListGroup defaultActiveKey='/dashboard'>
-          <ListGroup.Item action href='/dashboard/create-product'>
-            Cadastrar produto
-          </ListGroup.Item>
-          <ListGroup.Item action href='/dashboard/list-product'>
-            Listar produtos
-          </ListGroup.Item>
-          <ListGroup.Item action href='/dashboard/users'>
-            Usuários
-          </ListGroup.Item>
-        </ListGroup>
+          <ListGroup defaultActiveKey='/dashboard'>
+            <ListGroup.Item
+              action
+              href='/dashboard/create-product'
+              variant='dark'
+            >
+              Cadastrar produto
+            </ListGroup.Item>
+            <ListGroup.Item
+              action
+              href='/dashboard/list-product'
+              variant='dark'
+            >
+              Listar produtos
+            </ListGroup.Item>
+          </ListGroup>
       </div>
     </>
   );
