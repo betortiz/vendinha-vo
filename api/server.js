@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoute.js';
+import productRoutes from './routes/productRoutes.js';
 import cors from 'cors';
 
 // Carrega as variáveis de ambiente
@@ -22,6 +23,7 @@ app.use(morgan('dev'));
 
 // Rotas
 app.use('/api/auth', authRoutes);
+app.use('/api/product', productRoutes);
 
 // Rota de teste api
 app.get('/', (req, res) => {
