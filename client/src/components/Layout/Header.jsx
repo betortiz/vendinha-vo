@@ -3,8 +3,23 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { AiOutlineShop } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
+import './styles.css';
+import { useAuth } from '../../context/auth';
+import toast from 'react-hot-toast';
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: null,
+    });
+    localStorage.removeItem('auth');
+    toast.success('Você saiu com sucesso');
+  };
+
   return (
     <>
       <Navbar
@@ -25,8 +40,26 @@ const Header = () => {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <NavLink to='/login' className='nav-link'>Login</NavLink>
-              <NavLink to='/register' className='nav-link'>Register</NavLink>
+              {!auth.user ? (
+                <>
+                  <NavLink to='/login' className='nav-link'>
+                    Login
+                  </NavLink>
+                  <NavLink to='/register' className='nav-link'>
+                    Register
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    onClick={handleLogout}
+                    to='/login'
+                    className='nav-link'
+                  >
+                    Sair
+                  </NavLink>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

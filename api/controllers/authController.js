@@ -9,20 +9,20 @@ export const registerController = async (req, res) => {
 
     // Verifica se o usuário já existe
     if (!name) {
-      return res.send({ error: 'Nome é obrigatório' });
+      return res.send({ message: 'Nome é obrigatório' });
     }
     if (!email) {
-      return res.send({ error: 'Email é obrigatório' });
+      return res.send({ message: 'Email é obrigatório' });
     }
     if (!password) {
-      return res.send({ error: 'Senha é obrigatório' });
+      return res.send({ message: 'Senha é obrigatório' });
     }
 
     // Verifica se existe um usuário com o mesmo email
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(200).send({
-        success: true,
+        success: false,
         message: 'Usuário já existe',
       });
     }

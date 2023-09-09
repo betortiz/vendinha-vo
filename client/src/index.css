@@ -3,32 +3,3 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-.navbar {
-  font-size: 17px;
-  line-height: 26px;
-  text-transform: uppercase;
-  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.4);
-  --webkit-box-shadow: 0 6px 6px rgba(0, 0, 0, 0.4);
-  border-bottom: solid 1px #e5e5e5 !important;
-}
-
-.nav-link {
-  color: #fff !important;
-  font-weight: 300 !important;
-}
-
-.nav-link:hover {
-  color: #e6b472 !important;
-}
-
-.active {
-  color: #e6b472 !important;
-  border-bottom: solid 1px #e6b472 !important;
-}
-
-.icon-v {
-  font-size: 35px;
-  margin-right: 20px;
-  color: #e6b472;
-}

@@ -15,5 +15,11 @@ router.post('/login', loginController);
 // Teste de rota protegida || GET
 router.get('/test', requireSignIn, testControler);
 
+// Rota protegida auth || GET
+router.get('/user-auth', requireSignIn, (req, res) => {
+    res.status(200).send({ ok: true})
+});
+
+
 // Exporta o objeto router
 export default router;
