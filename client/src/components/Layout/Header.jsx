@@ -43,10 +43,10 @@ const Header = () => {
               {!auth.user ? (
                 <>
                   <NavLink to='/login' className='nav-link'>
-                    Login
+                    Entrar
                   </NavLink>
                   <NavLink to='/register' className='nav-link'>
-                    Register
+                    Registrar
                   </NavLink>
                 </>
               ) : (
