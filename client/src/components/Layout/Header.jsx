@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { AiOutlineShop } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
-import './styles.css';
+import './layout.css';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 
@@ -59,7 +59,7 @@ const Header = () => {
                   </NavLink>
                   <NavLink
                     onClick={handleLogout}
-                    to='/login'
+                    to='/'
                     className='nav-link'
                   >
                     Sair

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
-import UpdateForm from '../../components/Layout/UpdateForm';
+import { AiOutlineEdit } from 'react-icons/ai';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -39,7 +39,7 @@ const ListProduct = () => {
           <div className='col-md-3'>
             <Menu />
           </div>
-          <div className='col-md-9' style={{textTransform: "uppercase"}}>
+          <div className='col-md-9' style={{ textTransform: 'uppercase' }}>
             <div className='text-center w-75'>
               <h4>Lista de Produtos</h4>
               <div>
@@ -50,7 +50,7 @@ const ListProduct = () => {
                       <th>Produto</th>
                       <th>Descrição</th>
                       <th>Preço</th>
-                      <th>Quantidade</th>
+                      <th>Qtd</th>
                       <th colSpan={2}>Ação</th>
                     </tr>
                   </thead>
@@ -63,7 +63,9 @@ const ListProduct = () => {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.quantity}</td>
                         <td>
-                          <UpdateForm />
+                          <button className='btn btn-primary'>
+                            <AiOutlineEdit />
+                          </button>
                         </td>
                         <td>
                           <button className='btn btn-danger'>
