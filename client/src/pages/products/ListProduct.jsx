@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -63,9 +64,12 @@ const ListProduct = () => {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.quantity}</td>
                         <td>
-                          <button className='btn btn-primary'>
+                          <Link
+                            to={`/dashboard/update-product/${product.slug}`}
+                            className='btn btn-primary'
+                          >
                             <AiOutlineEdit />
-                          </button>
+                          </Link>
                         </td>
                         <td>
                           <button className='btn btn-danger'>
