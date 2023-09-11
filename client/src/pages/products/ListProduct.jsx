@@ -6,11 +6,11 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
-
+  const params = useParams();
   // Listar todos os produtos cadastrados
   const getAllProducts = async () => {
     try {
@@ -32,6 +32,25 @@ const ListProduct = () => {
       currency: 'BRL',
     });
   };
+
+  // Deletar um produto
+  const handleDelete = async (slug) => {
+    let answer = window.confirm('Deseja deletar o produto?');
+    if (!answer) return;
+    try {
+      const { data } = await axios.delete(`/api/product/delete-product/${slug}`);
+      if (data?.success) {
+        toast.success('Produto deletado com sucesso');
+        getAllProducts();
+      } else {
+        toast.error('Erro ao deletar o produto');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Erro ao deletar o produto');
+    }
+  };
+
 
   return (
     <Layout title={'Vendinha da Vó | Produto'}>
@@ -72,7 +91,10 @@ const ListProduct = () => {
                           </Link>
                         </td>
                         <td>
-                          <button className='btn btn-danger'>
+                          <button
+                            className='btn btn-danger'
+                            onClick={() => handleDelete(product.slug)}
+                          >
                             <MdDeleteOutline />
                           </button>
                         </td>
