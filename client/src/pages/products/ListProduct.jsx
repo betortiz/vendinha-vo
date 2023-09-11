@@ -5,12 +5,13 @@ import toast from 'react-hot-toast';
 import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { Link, useParams } from 'react-router-dom';
+import UpdateModal from '../../components/Layout/UpdateModal';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
-  const params = useParams();
+
   // Listar todos os produtos cadastrados
   const getAllProducts = async () => {
     try {
@@ -38,7 +39,9 @@ const ListProduct = () => {
     let answer = window.confirm('Deseja deletar o produto?');
     if (!answer) return;
     try {
-      const { data } = await axios.delete(`/api/product/delete-product/${slug}`);
+      const { data } = await axios.delete(
+        `/api/product/delete-product/${slug}`
+      );
       if (data?.success) {
         toast.success('Produto deletado com sucesso');
         getAllProducts();
@@ -50,7 +53,6 @@ const ListProduct = () => {
       toast.error('Erro ao deletar o produto');
     }
   };
-
 
   return (
     <Layout title={'Vendinha da Vó | Produto'}>
@@ -83,11 +85,16 @@ const ListProduct = () => {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.quantity}</td>
                         <td>
-                          <Link
+                          {/* <Link
                             to={`/dashboard/update-product/${product.slug}`}
                             className='btn btn-primary'
                           >
                             <AiOutlineEdit />
+                          </Link> */}
+                          <Link
+                            className='btn btn-primary'
+                          >
+                            <UpdateModal slug={product.slug} />
                           </Link>
                         </td>
                         <td>

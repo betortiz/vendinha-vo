@@ -26,23 +26,3 @@
   margin-right: 20px;
   color: #e6b472;
 }
-
-
-/* *******************Modal*********************** */
-.modal-header{
-  background: #323539;
-  color: white
-}
-.modal-body{
-  background: #323539;
-  color: white
-}
-
-input.form-control{
-  background-color: #6e6f70;
-  text-transform: uppercase;
-}
-
-input.form-control::placeholder{
-  color: white
-}
