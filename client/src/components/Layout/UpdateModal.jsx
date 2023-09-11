@@ -8,16 +8,20 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const UpdateModal = ({slug}) => {
+const UpdateModal = ({ slug, onClose }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
 
-
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    if (onClose) onClose();
+  };
+
+
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
@@ -25,9 +29,7 @@ const UpdateModal = ({slug}) => {
   // Buscar o produto pelo slug
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/product/get-product/${slug}`
-      );
+      const { data } = await axios.get(`/api/product/get-product/${slug}`);
       setName(data.product.name);
       setDescription(data.product.description);
       setPrice(data.product.price);
@@ -67,11 +69,10 @@ const UpdateModal = ({slug}) => {
   };
 
   function handleClick(e) {
-    handleClose();
     handleUpdate();
-    window.location.reload();
+    handleClose();
   }
-  
+
   return (
     <div>
       <div onClick={handleShow}>

@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import './layout.css';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import Search from './Search';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -51,19 +52,16 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <NavLink to={`/`} className='nav-link'>
-                    {`Olá ${auth.user.name}`}
-                  </NavLink>
-                  <NavLink to={`/dashboard`} className='nav-link'>
-                    Painel
-                  </NavLink>
-                  <NavLink
-                    onClick={handleLogout}
-                    to='/'
-                    className='nav-link'
-                  >
-                    Sair
-                  </NavLink>
+                    <Search />
+                    <NavLink to={`/`} className='nav-link'>
+                      {`Olá ${auth.user.name}`}
+                    </NavLink>
+                    <NavLink to={`/dashboard`} className='nav-link'>
+                      Painel
+                    </NavLink>
+                    <NavLink onClick={handleLogout} to='/' className='nav-link'>
+                      Sair
+                    </NavLink>
                 </>
               )}
             </Nav>

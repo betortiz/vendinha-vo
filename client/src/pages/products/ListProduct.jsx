@@ -5,8 +5,6 @@ import toast from 'react-hot-toast';
 import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { AiOutlineEdit } from 'react-icons/ai';
 import UpdateModal from '../../components/Layout/UpdateModal';
 
 const ListProduct = () => {
@@ -85,17 +83,13 @@ const ListProduct = () => {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.quantity}</td>
                         <td>
-                          {/* <Link
-                            to={`/dashboard/update-product/${product.slug}`}
+                          <div
                             className='btn btn-primary'
                           >
-                            <AiOutlineEdit />
-                          </Link> */}
-                          <Link
-                            className='btn btn-primary'
-                          >
-                            <UpdateModal slug={product.slug} />
-                          </Link>
+                            <UpdateModal slug={product.slug} onClose={() => {
+                              getAllProducts();
+                            }}/>
+                          </div>
                         </td>
                         <td>
                           <button
