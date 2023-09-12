@@ -6,7 +6,6 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
-import { useNavigate } from 'react-router-dom';
 import Paginate from '../../components/Layout/Paginate';
 
 const ListProduct = () => {
@@ -15,7 +14,7 @@ const ListProduct = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  console.log(page)
 
   useEffect(() => {
     getAllProducts();
