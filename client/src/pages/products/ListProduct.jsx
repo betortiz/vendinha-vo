@@ -6,6 +6,8 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
+import { useNavigate } from 'react-router-dom';
+import Paginate from '../../components/Layout/Paginate';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -13,9 +15,12 @@ const ListProduct = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getAllProducts();
     getTotal();
+    // eslint-disable-next-line
   }, []);
 
   // Listar todos os produtos cadastrados
@@ -39,13 +44,13 @@ const ListProduct = () => {
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
-      toast.error('Erro ao contar o total de produtos');
     }
   };
 
   useEffect(() => {
     if (page === 1) return;
     loadMore();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   // Carregar mais produtos
@@ -58,21 +63,8 @@ const ListProduct = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      toast.error('Erro ao carregar mais produtos');
     }
   }
-
-  useEffect(() => {
-    getAllProducts();
-    getTotal();
-  }, []);
-
-  const formatPrice = (price) => {
-    return price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  };
 
   // Deletar um produto
   const handleDelete = async (slug) => {
@@ -92,6 +84,13 @@ const ListProduct = () => {
       console.log(error);
       toast.error('Erro ao deletar o produto');
     }
+  };
+
+  const formatPrice = (price) => {
+    return price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL',
+    });
   };
 
   return (
@@ -150,15 +149,14 @@ const ListProduct = () => {
             </div>
             <div className='m-2 p-3'>
               {products && products.length < total && (
-                <button
-                  className='btn btn-warning'
+                <div
                   onClick={(e) => {
                     e.preventDefault();
                     setPage(page + 1);
                   }}
                 >
-                  {loading ? 'Carregando...' : 'Carregar mais'}
-                </button>
+                  <Paginate page={page} />
+                </div>
               )}
             </div>
           </div>

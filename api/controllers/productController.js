@@ -161,10 +161,11 @@ export const productListController = async (req, res) => {
     const page = req.params.page ? req.params.page : 1;
     // Listar produtos
     const products = await productModel
-      .find({})
-      .skip(perPage * page - perPage)
-      .limit(perPage)
-      .sort({ createdAt: -1 });
+      .find({}) // Listar todos os produtos
+      .skip((page - 1) * perPage) // Pular produtos
+      .limit(perPage) // Produtos por página
+      .sort({ createdAt: -1 }); // Ordenar por data de criação
+
     // Resposta
     res.status(200).send({
       success: true,
