@@ -9,20 +9,62 @@ import UpdateModal from '../../components/Layout/UpdateModal';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getAllProducts();
+    getTotal();
+  }, []);
 
   // Listar todos os produtos cadastrados
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get('/api/product/get-product');
+      setLoading(true);
+      const { data } = await axios.get(`/api/product/product-list/${page}`);
+      setLoading(false);
       setProducts(data.products);
     } catch (error) {
+      setLoading(false);
       console.log(error);
       toast.error('Erro ao listar os produtos');
     }
   };
 
+  // Contar o total de produtos cadastrados
+  const getTotal = async () => {
+    try {
+      const { data } = await axios.get('/api/product/product-count');
+      setTotal(data?.total);
+    } catch (error) {
+      console.log(error);
+      toast.error('Erro ao contar o total de produtos');
+    }
+  };
+
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
+
+  // Carregar mais produtos
+  const loadMore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/api/product/product-list/${page}`);
+      setLoading(false);
+      setProducts([...products, ...data?.products]);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error('Erro ao carregar mais produtos');
+    }
+  }
+
   useEffect(() => {
     getAllProducts();
+    getTotal();
   }, []);
 
   const formatPrice = (price) => {
@@ -83,12 +125,13 @@ const ListProduct = () => {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.quantity}</td>
                         <td>
-                          <div
-                            className='btn btn-primary'
-                          >
-                            <UpdateModal slug={product.slug} onClose={() => {
-                              getAllProducts();
-                            }}/>
+                          <div className='btn btn-primary'>
+                            <UpdateModal
+                              slug={product.slug}
+                              onClose={() => {
+                                getAllProducts();
+                              }}
+                            />
                           </div>
                         </td>
                         <td>
@@ -104,6 +147,19 @@ const ListProduct = () => {
                   </tbody>
                 </Table>
               </div>
+            </div>
+            <div className='m-2 p-3'>
+              {products && products.length < total && (
+                <button
+                  className='btn btn-warning'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading ? 'Carregando...' : 'Carregar mais'}
+                </button>
+              )}
             </div>
           </div>
         </div>

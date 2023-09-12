@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { AiOutlineShop } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
-import './layout.css';
+import './../../assets/css/layout.css';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import Search from './Search';
@@ -28,6 +28,7 @@ const Header = () => {
         className='bg-body-tertiary'
         bg='dark'
         data-bs-theme='dark'
+        sticky="top"
       >
         <Container fluid>
           <Navbar.Brand href='/'>

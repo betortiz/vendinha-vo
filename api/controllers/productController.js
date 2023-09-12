@@ -10,17 +10,17 @@ export const createProductController = async (req, res) => {
     // Validação
     switch (true) {
       case !name:
-        return res.status(500).send({error: 'Nome é obrigatório'});
+        return res.status(500).send({ error: 'Nome é obrigatório' });
       case !price:
-        return res.status(500).send({error: 'Preço é obrigatório'});
+        return res.status(500).send({ error: 'Preço é obrigatório' });
       case !description:
-        return res.status(500).send({error: 'Descrição é obrigatório'});
+        return res.status(500).send({ error: 'Descrição é obrigatório' });
       case !quantity:
-        return res.status(500).send({error: 'Quantidade é obrigatório'});      
+        return res.status(500).send({ error: 'Quantidade é obrigatório' });
     }
 
     // Criar produto
-    const products = new productModel({...req.fields, slug: slugify(name)});
+    const products = new productModel({ ...req.fields, slug: slugify(name) });
     // Salvar produto
     await products.save();
 
@@ -42,7 +42,10 @@ export const createProductController = async (req, res) => {
 export const getProductController = async (req, res) => {
   try {
     // Listar produtos
-    const products = await productModel.find({}).limit(10).sort({ createdAt: -1 });
+    const products = await productModel
+      .find({})
+      .limit(10)
+      .sort({ createdAt: -1 });
     // Resposta
     res.status(200).send({
       success: true,
@@ -51,14 +54,14 @@ export const getProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       succcess: false,
       message: 'Erro ao listar produtos',
       error: error.message,
     });
   }
-}
+};
 
 // Buscar um produto
 export const getSingleProductController = async (req, res) => {
@@ -72,7 +75,7 @@ export const getSingleProductController = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       succcess: false,
       message: 'Erro ao buscar produto',
@@ -85,7 +88,9 @@ export const getSingleProductController = async (req, res) => {
 export const deleteProductController = async (req, res) => {
   try {
     // Deletar produto
-    const product = await productModel.findOneAndDelete({ slug: req.params.slug });
+    const product = await productModel.findOneAndDelete({
+      slug: req.params.slug,
+    });
     // Resposta
     res.status(200).send({
       success: true,
@@ -93,7 +98,7 @@ export const deleteProductController = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       succcess: false,
       message: 'Erro ao deletar produto',
@@ -118,10 +123,84 @@ export const updateProductController = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       succcess: false,
       message: 'Erro ao atualizar produto',
+      error: error.message,
+    });
+  }
+};
+
+// Contar produtos
+export const countProductController = async (req, res) => {
+  try {
+    // Contar produtos
+    const total = await productModel.find({}).estimatedDocumentCount();
+    // Resposta
+    res.status(200).send({
+      success: true,
+      message: 'Total de produtos',
+      total,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      succcess: false,
+      message: 'Erro ao contar produtos',
+      error: error.message,
+    });
+  }
+};
+
+// Produtos por página
+export const productListController = async (req, res) => {
+  try {
+    // Produtos por página
+    const perPage = 6;
+    const page = req.params.page ? req.params.page : 1;
+    // Listar produtos
+    const products = await productModel
+      .find({})
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    // Resposta
+    res.status(200).send({
+      success: true,
+      message: 'Produtos listados com sucesso',
+      products,
+    });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      succcess: false,
+      message: 'Erro ao listar produtos',
+      error: error.message,
+    });
+  }
+};
+
+// Buscar um produto
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    // Buscar produto
+    const results = await productModel.find({
+      $or: [
+        { name: { $regex: keyword, $options: 'i' } },
+        { description: { $regex: keyword, $options: 'i' } },
+      ],
+    });
+
+    // Resposta
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      succcess: false,
+      message: 'Erro ao buscar produto',
       error: error.message,
     });
   }

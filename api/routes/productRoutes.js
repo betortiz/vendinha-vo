@@ -1,10 +1,13 @@
 import express from 'express';
 import { requireSignIn } from './../middlewares/authMiddleware.js';
 import {
+  countProductController,
   createProductController,
   deleteProductController,
   getProductController,
   getSingleProductController,
+  productListController,
+  searchProductController,
   updateProductController,
 } from '../controllers/productController.js';
 import formidable from 'express-formidable';
@@ -36,5 +39,14 @@ router.put(
   formidable(),
   updateProductController
 );
+
+// Contar produtos
+router.get('/product-count', requireSignIn, countProductController);
+
+// Produtos por página
+router.get('/product-list/:page', requireSignIn, productListController);
+
+// Buscar um produto
+router.get('/search/:keyword', requireSignIn, searchProductController);
 
 export default router;
