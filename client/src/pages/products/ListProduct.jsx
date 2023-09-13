@@ -7,6 +7,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
 import Paginate from '../../components/Layout/Paginate';
+import Button from 'react-bootstrap/Button';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,7 @@ const ListProduct = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  console.log(page)
+  console.log(page);
 
   useEffect(() => {
     getAllProducts();
@@ -49,7 +50,7 @@ const ListProduct = () => {
   useEffect(() => {
     if (page === 1) return;
     loadMore();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   // Carregar mais produtos
@@ -63,7 +64,7 @@ const ListProduct = () => {
       console.log(error);
       setLoading(false);
     }
-  }
+  };
 
   // Deletar um produto
   const handleDelete = async (slug) => {
@@ -148,14 +149,14 @@ const ListProduct = () => {
             </div>
             <div className='m-2 p-3'>
               {products && products.length < total && (
-                <div
+                <Button
                   onClick={(e) => {
                     e.preventDefault();
                     setPage(page + 1);
                   }}
                 >
-                  <Paginate page={page} />
-                </div>
+                  Carregar mais
+                </Button>
               )}
             </div>
           </div>
