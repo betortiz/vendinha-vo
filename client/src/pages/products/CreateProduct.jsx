@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout/Layout';
 import Menu from '../../components/Layout/Menu';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
-import './dashboard.css';
+import './products.css';
 
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
-
-  const navigate = useNavigate();
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [products, setProducts] = useState([]);
 
   // Função para criar um produto
   const handleCreate = async (e) => {
@@ -26,16 +25,28 @@ const CreateProduct = () => {
       productData.append('price', price);
       productData.append('quantity', quantity);
 
-      const { data } = await axios.post('/api/product/create-product', productData);
+      const { data } = await axios.post(
+        '/api/product/create-product',
+        productData
+      );
       if (data.success) {
         toast.success(data.message);
-        navigate('/dashboard/list-product');
+        clearForm();
+        window.location.reload();
       } else {
         toast.error(data.message);
       }
     } catch (err) {
       toast.error(err.response.data.message);
     }
+  };
+
+  // Apagar formulário
+  const clearForm = () => {
+    setName('');
+    setDescription('');
+    setPrice('');
+    setQuantity('');
   };
 
   return (

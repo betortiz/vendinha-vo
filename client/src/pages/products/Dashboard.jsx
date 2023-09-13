@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout';
 import Menu from '../../components/Layout/Menu';
 import { useAuth } from '../../context/auth';
-import './dashboard.css';
+import './products.css';
 
 const Dashboard = () => {
   const [auth] = useAuth();

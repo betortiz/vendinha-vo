@@ -7,6 +7,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
 import Button from 'react-bootstrap/Button';
+import './products.css';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
@@ -92,7 +93,7 @@ const ListProduct = () => {
 
   return (
     <Layout title={'Vendinha da Vó | Produto'}>
-      <div className='container-fluid p-3 m-3'>
+      <div className='container-fluid m-3'>
         <div className='row'>
           <div className='col-md-3'>
             <Menu />
