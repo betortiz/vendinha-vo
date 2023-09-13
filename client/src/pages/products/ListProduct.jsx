@@ -6,7 +6,6 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
-import Paginate from '../../components/Layout/Paginate';
 import Button from 'react-bootstrap/Button';
 
 const ListProduct = () => {
@@ -14,8 +13,6 @@ const ListProduct = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
-  console.log(page);
 
   useEffect(() => {
     getAllProducts();
