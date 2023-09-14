@@ -7,11 +7,13 @@ import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
 import Pagination from 'react-bootstrap/Pagination';
+import PageItem from 'react-bootstrap/PageItem';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const maxButtons = 5; // Número máximo de botões na paginação
 
   useEffect(() => {
     getAllProducts(currentPage);
@@ -32,6 +34,26 @@ const ListProduct = () => {
       console.log(error);
       toast.error('Erro ao listar os produtos');
     }
+  };
+
+  const renderPageItems = () => {
+    const pageItems = [];
+    const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+    for (let page = startPage; page <= endPage; page++) {
+      pageItems.push(
+        <PageItem
+          key={page}
+          active={page == currentPage}
+          onClick={() => handlePageChange(page)}
+        >
+          {page}
+        </PageItem>
+      );
+    }
+
+    return pageItems;
   };
 
   // Deletar um produto
@@ -125,17 +147,14 @@ const ListProduct = () => {
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === '1'}
                 />
-                {[...Array(totalPages).keys()].map((page) => (
-                  <Pagination.Item
-                    key={page}
-                    active={page + 1 == currentPage}
-                    onClick={() => handlePageChange(page + 1)}
-                  >
-                    {page + 1}
-                  </Pagination.Item>
-                ))}
+                {renderPageItems()}
                 <Pagination.Ellipsis />
-                <Pagination.Item>{10}</Pagination.Item>
+                <Pagination.Item
+                  onClick={() => handlePageChange(10)}
+                  disabled={currentPage === '10'}
+                >
+                  {10}
+                </Pagination.Item>
                 <Pagination.Ellipsis />
                 <Pagination.Last
                   onClick={() => handlePageChange(totalPages)}

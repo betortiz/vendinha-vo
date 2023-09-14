@@ -157,7 +157,7 @@ export const countProductController = async (req, res) => {
 export const productListController = async (req, res) => {
   try {
     // Produtos por página
-    const limit = 5;
+    const limit = 2;
     const page = req.params.page ? req.params.page : 1;
     // Listar produtos
     const products = await productModel
