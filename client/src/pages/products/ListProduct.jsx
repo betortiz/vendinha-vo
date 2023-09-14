@@ -156,6 +156,13 @@ const ListProduct = () => {
                   {10}
                 </Pagination.Item>
                 <Pagination.Ellipsis />
+                <Pagination.Item
+                  onClick={() => handlePageChange(20)}
+                  disabled={currentPage === '20'}
+                >
+                  {20}
+                </Pagination.Item>
+                <Pagination.Ellipsis />
                 <Pagination.Last
                   onClick={() => handlePageChange(totalPages)}
                   disabled={currentPage === totalPages}
