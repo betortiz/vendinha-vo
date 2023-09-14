@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [auth] = useAuth();
   return (
     <Layout title={'Vendinha da Vó | Dashboard'}>
-      <div className='container-fluid p-3 m-3'>
+      <div className='container-fluid p-3 m-3' style={{minHeight: '71vh'}}>
         <div className='row'>
           <div className='col-md-3'>
             <Menu />

@@ -157,22 +157,26 @@ export const countProductController = async (req, res) => {
 export const productListController = async (req, res) => {
   try {
     // Produtos por página
-    const perPage = 10;
+    const limit = 5;
     const page = req.params.page ? req.params.page : 1;
     // Listar produtos
     const products = await productModel
       .find({}) // Listar todos os produtos
-      .skip((page - 1) * perPage) // Pular produtos
-      .limit(perPage) // Produtos por página
-      .sort({ createdAt: -1 }); // Ordenar por data de criação
+      .skip((page - 1) * limit) // Pular produtos
+      .limit(limit) // Produtos por página
+      .sort() // Ordenar por data de criação { createdAt: -1 } se for o caso
+      .exec(); // Executar
+
+    const totalProducts = await productModel.find({}).estimatedDocumentCount();
 
     // Resposta
     res.status(200).send({
       success: true,
+      totalPages: Math.ceil(totalProducts / limit),
+      currentPage: page,
       message: 'Produtos listados com sucesso',
       products,
     });
-    
   } catch (error) {
     console.log(error);
     res.status(400).send({

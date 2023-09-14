@@ -6,61 +6,31 @@ import Table from 'react-bootstrap/Table';
 import { MdDeleteOutline } from 'react-icons/md';
 import axios from 'axios';
 import UpdateModal from '../../components/Layout/UpdateModal';
-import Button from 'react-bootstrap/Button';
-import './products.css';
+import Pagination from 'react-bootstrap/Pagination';
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    getAllProducts();
-    getTotal();
-    // eslint-disable-next-line
-  }, []);
+    getAllProducts(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (page) => {
+    getAllProducts(page);
+  };
 
   // Listar todos os produtos cadastrados
-  const getAllProducts = async () => {
+  const getAllProducts = async (page) => {
     try {
-      setLoading(true);
       const { data } = await axios.get(`/api/product/product-list/${page}`);
-      setLoading(false);
       setProducts(data.products);
+      setTotalPages(data.totalPages);
+      setCurrentPage(data.currentPage);
     } catch (error) {
-      setLoading(false);
       console.log(error);
       toast.error('Erro ao listar os produtos');
-    }
-  };
-
-  // Contar o total de produtos cadastrados
-  const getTotal = async () => {
-    try {
-      const { data } = await axios.get('/api/product/product-count');
-      setTotal(data?.total);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (page === 1) return;
-    loadMore();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  // Carregar mais produtos
-  const loadMore = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`/api/product/product-list/${page}`);
-      setLoading(false);
-      setProducts([...products, ...data?.products]);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
     }
   };
 
@@ -93,7 +63,7 @@ const ListProduct = () => {
 
   return (
     <Layout title={'Vendinha da Vó | Produto'}>
-      <div className='container-fluid m-3'>
+      <div className='container-fluid m-3' style={{ minHeight: '71vh' }}>
         <div className='row'>
           <div className='col-md-3'>
             <Menu />
@@ -145,17 +115,33 @@ const ListProduct = () => {
                 </Table>
               </div>
             </div>
-            <div className='m-2 p-3'>
-              {products && products.length < total && (
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage(page + 1);
-                  }}
-                >
-                  Carregar mais
-                </Button>
-              )}
+            <div>
+              <Pagination>
+                <Pagination.First
+                  onClick={() => handlePageChange(1)}
+                  disabled={currentPage === '1'}
+                />
+                <Pagination.Prev
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === '1'}
+                />
+                {[...Array(totalPages).keys()].map((page) => (
+                  <Pagination.Item
+                    key={page}
+                    active={page + 1 == currentPage}
+                    onClick={() => handlePageChange(page + 1)}
+                  >
+                    {page + 1}
+                  </Pagination.Item>
+                ))}
+                <Pagination.Ellipsis />
+                <Pagination.Item>{10}</Pagination.Item>
+                <Pagination.Ellipsis />
+                <Pagination.Last
+                  onClick={() => handlePageChange(totalPages)}
+                  disabled={currentPage === totalPages}
+                />
+              </Pagination>
             </div>
           </div>
         </div>

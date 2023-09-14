@@ -20,6 +20,7 @@ const Menu = () => {
   useEffect(() => {
     getTotal();
   }, []);
+  
   return (
     <>
       <div className='text-center' style={{textTransform: "uppercase"}}>
