@@ -6,6 +6,7 @@ import Dashboard from './pages/products/Dashboard';
 import PrivateRoute from './components/Routes/Private';
 import CreateProduct from './pages/products/CreateProduct';
 import ListProduct from './pages/products/ListProduct';
+import Search from './pages/products/Search';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='' element={<Dashboard />} />
           <Route path='/dashboard/create-product' element={<CreateProduct />} />
           <Route path='/dashboard/list-product' element={<ListProduct />} />
+          <Route path='/dashboard/search' element={<Search />} />
         </Route>
       </Routes>
     </>

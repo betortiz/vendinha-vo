@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import './../../assets/css/layout.css';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
-import Search from './Search';
+import SearchInput from './SearchInput';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -53,7 +53,7 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                    <Search />
+                    <SearchInput />
                     <NavLink to={`/`} className='nav-link'>
                       {`Olá ${auth.user.name}`}
                     </NavLink>
