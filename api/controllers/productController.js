@@ -206,7 +206,7 @@ export const searchProductController = async (req, res) => {
     res.status(500).send({
       succcess: false,
       message: 'Erro ao buscar produto',
-      error: error.message,
+      error,
     });
   }
 };
