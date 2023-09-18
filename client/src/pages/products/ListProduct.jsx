@@ -84,7 +84,7 @@ const ListProduct = () => {
   };
 
   return (
-    <Layout title={'Vendinha da Vó | Produto'}>
+    // <Layout title={'Vendinha da Vó | Produto'}>
       <div className='container-fluid m-3' style={{ minHeight: '71vh' }}>
         <div className='row'>
           <div className='col-md-3'>
@@ -172,7 +172,7 @@ const ListProduct = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    // </Layout>
   );
 };
 

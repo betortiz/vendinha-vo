@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from './../../components/Layout/Layout';
 import { useSearch } from '../../context/search';
+import ListProduct from './ListProduct';
 
 const Search = () => {
   const [values, setValues] = useSearch();
@@ -12,8 +13,8 @@ const Search = () => {
           <h1>Search product</h1>
           <h6>
             {values?.results.length < 1
-              ? 'No products found'
-              : `Found ${values?.results.length}`}
+              ? (<ListProduct />)
+              : (`${values?.results.length} products found`)}
           </h6>
         </div>
       </div>
