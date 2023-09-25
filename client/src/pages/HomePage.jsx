@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../components/Layout/Layout';
 import { useAuth } from '../context/auth';
 import foto from './../assets/image/vendinha.jpeg';
-import './homePage.css';
+import './../assets/css/homePage.css';
 
 const HomePage = () => {
   const [auth, setAuth] = useAuth();

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
-import './products.css';
+import './../../assets/css/products.css';
 
 const CreateProduct = () => {
   const [name, setName] = useState('');

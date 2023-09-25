@@ -210,3 +210,17 @@ export const searchProductController = async (req, res) => {
     });
   }
 };
+
+// Listar todos os produtos
+export const listAllProductsController = async (req, res) => {
+  try {
+    const products = await productModel.find({}).sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      message: 'Produtos listados com sucesso',
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

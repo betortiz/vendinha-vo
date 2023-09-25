@@ -58,7 +58,7 @@ const UpdateModal = ({ slug, onClose }) => {
       );
       if (data?.success) {
         toast.success('Produto atualizado com sucesso');
-        navigate('/dashboard/list-product');
+        navigate('/dashboard/search');
       } else {
         toast.error('Erro ao atualizar o produto');
       }
